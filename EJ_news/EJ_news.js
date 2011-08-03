@@ -165,6 +165,10 @@ function saveNews(key, id)
 	{
 		message = message + "<p class=\"EJ_user_error\" style=\"text-align: left;\">'Title' cannot be empty!</p>";
 	}
+	if (empty(form.desc.value))
+	{
+		message = message + "<p class=\"EJ_user_error\" style=\"text-align: left;\">'Description' cannot be empty!</p>";
+	}
 	if (form.cat.value == 'NONE')
 	{
 		message = message + "<p class=\"EJ_user_error\" style=\"text-align: left;\">Please select 'Category'!</p>";
@@ -176,14 +180,6 @@ function saveNews(key, id)
 	if (empty(form.time.value) || form.time.value.substr(2,1)!=":")
 	{
 		message = message + "<p class=\"EJ_user_error\" style=\"text-align: left;\">Format for 'Time' is incorrect!</p>";
-	}
-	if (empty(form.location1.value))
-	{
-		message = message + "<p class=\"EJ_user_error\" style=\"text-align: left;\">'Location' line 1 cannot be empty!</p>";
-	}
-	if (empty(form.contact.value))
-	{
-		message = message + "<p class=\"EJ_user_error\" style=\"text-align: left;\">'Contact Email' cannot be empty!</p>";
 	}
 	if (message !="")
 	{
@@ -201,12 +197,6 @@ function saveNews(key, id)
 					form.poster.options[0].selected = true;
 					form.hidden.options[0].selected = true;
 					form.time.value = "";
-					form.location1.value = "";
-					form.location2.value = "";
-					form.location3.value = "";
-					form.location4.value = "";
-					form.location5.value = "";
-					form.contact.value = "";
 					form.image.value = "";
 					document.getElementById('newsimage').src = 'modules/EJ_news/images/noimage.png';
 					document.location="?module=EJ_news&action=search";
@@ -224,12 +214,6 @@ function saveNews(key, id)
 		poster = form.poster.value;
 		hidden = form.hidden.value;
 		time = form.time.value;
-		location1 = form.location1.value;
-		location2 = form.location2.value;
-		location3 = form.location3.value;
-		location4 = form.location4.value;
-		location5 = form.location5.value;
-		contact = form.contact.value;
 		image = form.image.value;
 		if (id)
 		{
@@ -238,7 +222,7 @@ function saveNews(key, id)
 		{
 			sendid = "";
 		}
-		ajax.send("title="+escape(title)+"&desc="+escape(desc)+"&cat="+cat+"&date="+date+"&poster="+poster+"&time="+time+"&location1="+location1+"&location2="+location2+"&location3="+location3+"&location4="+location4+"&location5="+location5+"&contact="+contact+"&hidden="+hidden+"&image="+image+sendid+"&key="+key);
+		ajax.send("title="+escape(title)+"&desc="+escape(desc)+"&cat="+cat+"&date="+date+"&poster="+poster+"&time="+time+"&hidden="+hidden+"&image="+image+sendid+"&key="+key);
 	}
 }
 

@@ -57,11 +57,6 @@ class EJ_news
 				EJ_newsHidden TINYINT(1) NOT NULL DEFAULT 1 ,
 				EJ_newsPoster VARCHAR(20) NOT NULL ,
 				EJ_newsCat INT(6) NOT NULL ,
-				EJ_newsLoc1 VARCHAR(100) NOT NULL ,
-				EJ_newsLoc2 VARCHAR(100) ,
-				EJ_newsLoc3 VARCHAR(100) ,
-				EJ_newsLoc4 VARCHAR(100) ,
-				EJ_newsLoc5 VARCHAR(100) ,
 				EJ_newsTime VARCHAR(5) NOT NULL ,
 				EJ_newsHits INT(6) NOT NULL ,
 				PRIMARY KEY (EJ_newsId)
@@ -332,7 +327,7 @@ class EJ_news
 			}
 			$content2 .= "
 				<div class=\"news_result\" id=\"{$news['EJ_newsId']}\">
-					<div style=\"float: right;\"><img src=\"".$this->moduleloc."recycle.png\" alt=\"delete\" title=\"Delete news\" style=\"cursor: pointer; border: 0;\" onclick=\"deletenews('{$news['EJ_newsId']}', '{$_SESSION['key']}')\" /> <a href=\"?module=EJ_news&action=editnews&newsid={$news['EJ_newsId']}\"><img src=\"".$this->moduleloc."edit.png\" alt=\"edit\" title=\"Edit news\" style=\"cursor: pointer; border: 0;\" /></a> <img src=\"".$this->moduleloc."blue_down.png\" alt=\"show/hide details\" title=\"Show/Hide Details\"style=\"cursor: pointer;\" onclick=\"Slide(this.parentNode.parentNode, 16, 150)\" /></div>
+					<div style=\"float: right;\"><img src=\"".$this->moduleloc."recycle.png\" alt=\"delete\" title=\"Delete news\" style=\"cursor: pointer; border: 0;\" onclick=\"deleteNews('{$news['EJ_newsId']}', '{$_SESSION['key']}')\" /> <a href=\"?module=EJ_news&action=editnews&newsid={$news['EJ_newsId']}\"><img src=\"".$this->moduleloc."edit.png\" alt=\"edit\" title=\"Edit news\" style=\"cursor: pointer; border: 0;\" /></a> <img src=\"".$this->moduleloc."blue_down.png\" alt=\"show/hide details\" title=\"Show/Hide Details\"style=\"cursor: pointer;\" onclick=\"Slide(this.parentNode.parentNode, 16, 150)\" /></div>
 					<p><strong>$date - {$news['EJ_newsTitle']}</strong> posted by: {$news['EJ_newsPoster']}</p>
 					<p><img src=\"{$this->moduleloc}images/$img\" alt=\"{$news['EJ_newsTitle']}\" class=\"newsImage\" />{$news['EJ_newsText']}</p>
 				</div>";
@@ -358,7 +353,7 @@ class EJ_news
 							Click Image To Change<br/>
 							<img id="newsimage" src="'.$this->moduleloc.'images/noimage.png" alt="Add An Image" title="Click to Add an Image" onclick="changepic()" style="width:200px; height:200px;" /><br/>
 							<input type="hidden" name="image" id="image" />
-							<input type="button" name="save" id="save" value="Save Changes" onclick="savenews(\''.$_SESSION['key'].'\')"/><br/>
+							<input type="button" name="save" id="save" value="Save Changes" onclick="saveNews(\''.$_SESSION['key'].'\')"/><br/>
 							<input type="button" name="cancel" id="cancel" value="Cancel Changes" onclick="document.location=\'?module=EJ_news&action=admin_page\'"/>
 						</div>
 						<div id="addRight">
@@ -387,12 +382,6 @@ class EJ_news
 							<script>DateInput(\'date\', true, \'DD-MON-YYYY\', \''.date("d-M-Y").'\' , \''.$_SESSION['key'].'\');</script>
 							<strong>news Time: (hh:mm)</strong><br/>
 							<input type="text" name="time" id="time" maxlength="5" size="5" value="00:00" /><br/>
-							<strong>Location:</strong><br/>
-							<input type="text" name="location1" id="location1" maxlength="100" size="40" /><br/>
-							<input type="text" name="location2" id="location2" maxlength="100" size="40" /><br/>
-							<input type="text" name="location3" id="location3" maxlength="100" size="40" /><br/>
-							<input type="text" name="location4" id="location4" maxlength="100" size="40" /><br/>
-							<input type="text" name="location5" id="location5" maxlength="100" size="40" /><br/>
 							<strong>Posted By:</strong><br/>
 							<select name="poster" id="poster">
 								<option value="NONE" selected="selected">Please Select...</option>';
@@ -456,7 +445,7 @@ class EJ_news
 							Click Image To Change<br/>
 							<img id="newsimage" src="'.$this->moduleloc.'images/'.$img.'" alt="Change Image" title="Click to Change Image" onclick="changepic()" style="width:200px; height:200px;" /><br/>
 							<input type="hidden" name="image" id="image" value="'.$img.'" />
-							<input type="button" name="save" id="save" value="Save Changes" onclick="savenews(\''.$_SESSION['key'].'\','.$this->vars['newsid'].')"/><br/>
+							<input type="button" name="save" id="save" value="Save Changes" onclick="saveNews(\''.$_SESSION['key'].'\','.$this->vars['newsid'].')"/><br/>
 							<input type="button" name="cancel" id="cancel" value="Cancel Changes" onclick="document.location=\'?module=EJ_news&action=admin_page\'"/>
 						</div>
 						<div id="addRight">
@@ -492,14 +481,6 @@ class EJ_news
 							<script>DateInput(\'date\', true, \'DD-MON-YYYY\', \''.date("d-M-Y", strtotime($news['EJ_newsDate'])).'\' , \''.$_SESSION['key'].'\');</script>
 							<strong>news Time: (hh:mm)</strong><br/>
 							<input type="text" name="time" id="time" maxlength="5" size="5" value="'.$news['EJ_newsTime'].'" /><br/>
-							<strong>Location:</strong><br/>
-							<input type="text" name="location1" id="location1" maxlength="100" size="40" value="'.$news['EJ_newsLoc1'].'" /><br/>
-							<input type="text" name="location2" id="location2" maxlength="100" size="40" value="'.$news['EJ_newsLoc2'].'" /><br/>
-							<input type="text" name="location3" id="location3" maxlength="100" size="40" value="'.$news['EJ_newsLoc3'].'" /><br/>
-							<input type="text" name="location4" id="location4" maxlength="100" size="40" value="'.$news['EJ_newsLoc4'].'" /><br/>
-							<input type="text" name="location5" id="location5" maxlength="100" size="40" value="'.$news['EJ_newsLoc5'].'" /><br/>
-							<strong>Contact Email:</strong><br/>
-							<input type="text" name="contact" id="contact" maxlength="150" size="40" value="'.$news['EJ_newsContact'].'" /><br/>
 							<strong>Posted By:</strong><br/>
 							<select name="poster" id="poster">
 								<option value="NONE" selected="selected">Please Select...</option>';
