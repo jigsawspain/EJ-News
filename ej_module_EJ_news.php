@@ -89,7 +89,7 @@ class EJ_news
 				<p class=\"EJ_instText\">
 				&gt; Creating initital news...
 				</p>";
-				$this->EJ_mysql->query("INSERT INTO {$this->EJ_mysql->prefix}module_EJ_news SET EJ_newsDate = DATE(NOW()), EJ_newsTitle = 'EJ News Installed Successfully!', EJ_newsText = 'This news article has been added by the EJ News setup procedure to demonstrate how your news will display on your site.<br /><br />Please edit or delete this news article when you are happy with your setup.<br /><br />EJ News - By Jigsaw Spain - <a href=\"http://www.jigsawspain.com\" target=\"_blank\">http://www.jigsawspain.com</a>', EJ_newsHidden = 0, EJ_newsPoster = 'admin', EJ_newsCat = 1, EJ_newsImage='noimage.png', EJ_newsLoc1 = 'No Address Provided', EJ_newsTime = '12:00'");
+				$this->EJ_mysql->query("INSERT INTO {$this->EJ_mysql->prefix}module_EJ_news SET EJ_newsDate = DATE(NOW()), EJ_newsTitle = 'EJ News Installed Successfully!', EJ_newsText = 'This news article has been added by the EJ News setup procedure to demonstrate how your news will display on your site.<br /><br />Please edit or delete this news article when you are happy with your setup.<br /><br />EJ News - By Jigsaw Spain - <a href=\"http://www.jigsawspain.com\" target=\"_blank\">http://www.jigsawspain.com</a>', EJ_newsHidden = 0, EJ_newsPoster = 'admin', EJ_newsCat = 1, EJ_newsImage='noimage.png', EJ_newsTime = '12:00'");
 			}
 			// Create initial categories
 			$this->EJ_mysql->query("SELECT catId FROM {$this->EJ_mysql->prefix}module_EJ_news_cats");
